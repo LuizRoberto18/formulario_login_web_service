@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_carros/pages/api_response.dart';
-import 'package:projeto_carros/pages/home_page.dart';
-import 'package:projeto_carros/pages/login_api.dart';
-import 'package:projeto_carros/pages/usuario.dart';
+import 'package:projeto_carros/pages/api/api_response.dart';
+import 'package:projeto_carros/pages/carro/home_page.dart';
+import 'package:projeto_carros/pages/login/login_api.dart';
+import 'package:projeto_carros/pages/login/usuario.dart';
 import 'package:projeto_carros/utls/alert.dart';
 import 'package:projeto_carros/utls/nav.dart';
 import 'package:projeto_carros/widgets/app_button.dart';
@@ -87,8 +87,8 @@ class _LoginPageState extends State<LoginPage> {
 
     if (response.ok!) {
       Usuario user = response.result;
-      print(">>> $response");
-      push(context, HomePage());
+      print(">>> $user");
+      push(context, HomePage(), replace: true);
     } else {
       alert(context, response.msg.toString());
     }
