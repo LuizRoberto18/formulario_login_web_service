@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_carros/pages/api/api_response.dart';
 import 'package:projeto_carros/pages/carro/home_page.dart';
+
 import 'package:projeto_carros/pages/login/login_api.dart';
 import 'package:projeto_carros/pages/login/usuario.dart';
 import 'package:projeto_carros/utls/alert.dart';
@@ -101,7 +102,6 @@ class _LoginPageState extends State<LoginPage> {
     if (text!.isEmpty) {
       return 'Digite  o Login';
     }
-    ;
   }
 
   String? _validadesSenha(String? text) {

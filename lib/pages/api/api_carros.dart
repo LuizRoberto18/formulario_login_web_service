@@ -1,15 +1,25 @@
-import 'package:projeto_carros/pages/carro/carro.dart';
+import 'dart:convert' as convert;
 
-class ApiCarros{
+import 'package:projeto_carros/pages/carro/carro.dart';
+import 'package:http/http.dart' as http;
+
+class ApiCarros {
   static Future<List<Carro>> getCarros() async {
+    var url =
+        Uri.parse('https://carros-springboot.herokuapp.com/api/v1/carros');
+    var response = await http.get(url);
+
+    String json = response.body;
+    print(json);
+    List list = convert.json.decode(json);
 
     final carros = <Carro>[];
+    for (Map map in list) {
+      Carro c = Carro.fromJson(map as Map<String, dynamic>);
+      carros.add(c);
+    }
 
-    await Future.delayed(Duration(seconds: 21));
-
-    carros.add(Carro(nome: "Chevrolet Corvette Z06", urlFoto: "https://s3-sa-east-1.amazonaws.com/videos.livetouchdev.com.br/esportivos/Chevrolet_Corvette_Z06.png"));
-    carros.add(Carro(nome: "BMW M5", urlFoto: "https://s3-sa-east-1.amazonaws.com/videos.livetouchdev.com.br/esportivos/BMW.png"));
-    carros.add(Carro(nome: "Renault Megane RS Trophy", urlFoto: "https://s3-sa-east-1.amazonaws.com/videos.livetouchdev.com.br/esportivos/Renault_Megane_Trophy.png"));
+    //List<Carro> carros = list.map<Carro>((map) => Carro.fromJson(map)).toList();
 
     return carros;
   }
