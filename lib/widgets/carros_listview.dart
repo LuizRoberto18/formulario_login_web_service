@@ -2,19 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:projeto_carros/pages/api/api_carros.dart';
 import 'package:projeto_carros/pages/carro/carro.dart';
 
-class CarrosListView extends StatelessWidget {
-  const CarrosListView({Key? key}) : super(key: key);
+class CarrosListView extends StatefulWidget {
+  String tipo;
+
+  CarrosListView(this.tipo);
+
+  @override
+  State<CarrosListView> createState() => _CarrosListViewState();
+}
+
+class _CarrosListViewState extends State<CarrosListView>
+    with AutomaticKeepAliveClientMixin<CarrosListView> {
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return _body();
   }
 
-  _body() {
-    Future<List<Carro>?> future = ApiCarros.getCarros();
+  _listCarros() async {
+    List<Carro> future = await ApiCarros.getCarros(TipoCarro.classicos);
+    return future;
+  }
 
+  _body() {
     return FutureBuilder(
-      future: future,
+      future: _listCarros(),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
           return Center(
@@ -24,7 +39,7 @@ class CarrosListView extends StatelessWidget {
             ),
           );
         }
-        if (!snapshot.data) {
+        if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(),
           );

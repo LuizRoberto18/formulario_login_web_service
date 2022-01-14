@@ -23,6 +23,17 @@ class _LoginPageState extends State<LoginPage> {
 
   final _focussenha = FocusNode();
   bool _showProgress = false;
+
+  @override
+  void initState(){
+    super.initState();
+    Future<Usuario> future = Usuario.get();
+    future.then((Usuario user) {
+      setState(() {
+        _ctrlLogin.text = user.login.toString();
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

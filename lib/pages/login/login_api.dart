@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:projeto_carros/pages/api/api_response.dart';
 import 'package:projeto_carros/pages/login/usuario.dart';
 
+import 'package:projeto_carros/utls/prefs.dart';
+
 class LoginApi {
   static Future<ApiResponse<Usuario>> login(String login, String senha) async {
     try {
@@ -26,6 +28,7 @@ class LoginApi {
 
       if (response.statusCode == 200) {
         final user = Usuario.fromJson(mapResponse as Map<String, dynamic>);
+        user.save();
 
         return ApiResponse.ok(user);
       }
