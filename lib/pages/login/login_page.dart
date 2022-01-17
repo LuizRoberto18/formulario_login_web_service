@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:projeto_carros/pages/api/api_response.dart';
 import 'package:projeto_carros/pages/carro/home_page.dart';
@@ -22,18 +24,20 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _focussenha = FocusNode();
-  bool _showProgress = false;
+
+  final _streamController = StreamController<bool>();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     Future<Usuario> future = Usuario.get();
     future.then((Usuario user) {
-      setState(() {
-        _ctrlLogin.text = user.login.toString();
-      });
+      if (user != null) {
+        push(context, HomePage(), replace: true);
+      }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,8 +80,17 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 20,
             ),
-            AppButton("Login",
-                onPressed: () => _onClickLogin(), showProgress: _showProgress),
+            StreamBuilder<bool>(
+              stream: _streamController.stream,
+              initialData: false,
+              builder: (context, snapshot) {
+                return AppButton(
+                  "Login",
+                  onPressed: () => _onClickLogin(),
+                  showProgress: snapshot.hasData,
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -92,9 +105,7 @@ class _LoginPageState extends State<LoginPage> {
     String senha = _ctrlSenha.text;
     print("login: $login, senha: $senha");
 
-    setState(() {
-      _showProgress = true;
-    });
+    _streamController.sink.add(true);
     ApiResponse response = await LoginApi.login(login, senha);
 
     if (response.ok!) {
@@ -104,9 +115,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       alert(context, response.msg.toString());
     }
-    setState(() {
-      _showProgress = false;
-    });
+    _streamController.add(false);
   }
 
   String? _validadeLogin(String? text) {
@@ -127,5 +136,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
+    _streamController.close();
   }
 }

@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:projeto_carros/pages/api/api_carros.dart';
 import 'package:projeto_carros/pages/carro/carro.dart';
+import 'package:projeto_carros/pages/carro/carro_page.dart';
+import 'package:projeto_carros/utls/nav.dart';
 
 class CarrosListView extends StatefulWidget {
-  String tipo;
-
+  final String tipo;
   CarrosListView(this.tipo);
 
   @override
@@ -13,29 +16,42 @@ class CarrosListView extends StatefulWidget {
 
 class _CarrosListViewState extends State<CarrosListView>
     with AutomaticKeepAliveClientMixin<CarrosListView> {
+  List<Carro>? carros;
+  final _streamController = StreamController<List<Carro>>();
   @override
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadCarros();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
+    print("CarrosListView build ${widget.tipo}");
     return _body();
   }
 
-  _listCarros() async {
-    List<Carro> future = await ApiCarros.getCarros(TipoCarro.classicos);
-    return future;
+  _loadCarros() async {
+    List<Carro> carros = await ApiCarros.getCarros(widget.tipo);
+    _streamController.add(carros);
   }
 
   _body() {
-    return FutureBuilder(
-      future: _listCarros(),
-      builder: (context, AsyncSnapshot snapshot) {
+    return StreamBuilder(
+      stream: _streamController.stream,
+      builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
             child: Text(
               "Não foi possivel buscar os carros",
-              style: TextStyle(color: Colors.red, fontSize: 22),
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 22,
+              ),
             ),
           );
         }
@@ -44,8 +60,8 @@ class _CarrosListViewState extends State<CarrosListView>
             child: CircularProgressIndicator(),
           );
         }
-        List<Carro> carros = snapshot.data;
-        return _listView(carros);
+
+        return _listView(carros!);
       },
     );
   }
@@ -86,7 +102,7 @@ class _CarrosListViewState extends State<CarrosListView>
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () => _onClickCarro(c),
                         child: Text("DETALHES"),
                       ),
                       SizedBox(
@@ -105,5 +121,15 @@ class _CarrosListViewState extends State<CarrosListView>
         },
       ),
     );
+  }
+
+  _onClickCarro(Carro c) {
+    push(context, CarroPage(c));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _streamController.close();
   }
 }

@@ -24,7 +24,7 @@ class DrawerList extends StatelessWidget {
           children: <Widget>[
             FutureBuilder<Usuario>(
               builder: (context, snapshot) {
-                if(!snapshot.hasData != null){
+                if (!snapshot.hasData != null) {
                   Usuario user = Usuario();
                   _header(user);
                 }
@@ -68,6 +68,7 @@ class DrawerList extends StatelessWidget {
   }
 
   void _onClickLogout(BuildContext context) {
+    Usuario.clear();
     Navigator.pop(context);
     push(context, LoginPage(), replace: true);
   }

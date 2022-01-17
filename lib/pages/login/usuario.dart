@@ -1,5 +1,6 @@
 import 'package:projeto_carros/utls/prefs.dart';
 import 'dart:convert' as convert;
+
 class Usuario {
   int? id;
   String? login;
@@ -11,12 +12,12 @@ class Usuario {
 
   Usuario(
       {this.id,
-        this.login,
-        this.nome,
-        this.email,
-        this.urlFoto,
-        this.token,
-        this.roles});
+      this.login,
+      this.nome,
+      this.email,
+      this.urlFoto,
+      this.token,
+      this.roles});
 
   Usuario.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -40,13 +41,17 @@ class Usuario {
     return data;
   }
 
+  static void clear() {
+    Prefs.setString("user.prefs", "");
+  }
+
   void save() {
     Map map = toJson();
     String json = convert.json.encode(map);
     Prefs.setString("user.prefs", json);
   }
 
-  static Future<Usuario> get() async{
+  static Future<Usuario> get() async {
     String json = await Prefs.getString("user.prefs");
 
     Map map = convert.json.decode(json);
