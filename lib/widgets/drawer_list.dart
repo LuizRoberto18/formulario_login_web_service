@@ -4,6 +4,8 @@ import 'package:projeto_carros/pages/login/usuario.dart';
 import 'package:projeto_carros/utls/nav.dart';
 
 class DrawerList extends StatelessWidget {
+  Usuario user = Usuario();
+
   _header(Usuario user) {
     return UserAccountsDrawerHeader(
       accountName: Text("${user.nome}"),
@@ -23,16 +25,12 @@ class DrawerList extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             FutureBuilder<Usuario>(
-              builder: (context, snapshot) {
-                if (!snapshot.hasData != null) {
-                  Usuario user = Usuario();
-                  _header(user);
-                }
-                return Container();
-                // Usuario user = snapshot.hasData;
-                // return user != null ? _header(user) : Container();
-              },
               future: future,
+              builder: (context, snapshot) {
+                //Usuario user = snapshot.hasData;
+                return user != null ? _header(user) : Container();
+
+              },
             ),
             _listTile(Icons.star, Icons.arrow_forward, "Favoritos",
                 "Mais informações", () {

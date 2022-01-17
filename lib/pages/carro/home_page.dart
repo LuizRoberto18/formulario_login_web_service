@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage>
       appBar: AppBar(
         title: Text("Carros"),
         bottom: TabBar(
-          controller: _tabController,
+          controller: _tabController!,
           tabs: [
             Tab(
               text: "Clássicos",
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage>
         centerTitle: true,
       ),
       body: TabBarView(
-        controller: _tabController,
+        controller: _tabController!,
         children: [
           CarrosListView(TipoCarro.classicos),
           CarrosListView(TipoCarro.esportivos),

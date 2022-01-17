@@ -32,9 +32,11 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     Future<Usuario> future = Usuario.get();
     future.then((Usuario user) {
-      if (user != null) {
-        push(context, HomePage(), replace: true);
-      }
+    if(user != null){
+      setState(() {
+        _ctrlLogin.text = user.login!;
+      });
+    }
     });
   }
 
@@ -82,12 +84,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
             StreamBuilder<bool>(
               stream: _streamController.stream,
-              initialData: false,
+
               builder: (context, snapshot) {
                 return AppButton(
                   "Login",
                   onPressed: () => _onClickLogin(),
-                  showProgress: snapshot.hasData,
+                  showProgress: snapshot.hasData != null ? snapshot.hasData : false ,
                 );
               },
             ),
@@ -106,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
     print("login: $login, senha: $senha");
 
     _streamController.sink.add(true);
+
     ApiResponse response = await LoginApi.login(login, senha);
 
     if (response.ok!) {

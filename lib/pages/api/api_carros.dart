@@ -19,7 +19,7 @@ class ApiCarros {
       "Authorization": "Bearer ${user.token}"
     };
     var url = Uri.parse(
-        'https://carros-springboot.herokuapp.com/api/v2/carros/tipo/$tipo');
+        'https://carros-springboot.herokuapp.com/api/v1/carros/tipo/$tipo');
     print("GET > $url");
     var response = await http.get(url);
 
@@ -29,13 +29,13 @@ class ApiCarros {
 
     List list = convert.json.decode(json);
 
-    final carros = <Carro>[];
-    for (Map map in list) {
-      Carro c = Carro.fromJson(map as Map<String, dynamic>);
-      carros.add(c);
-    }
+    // final carros = <Carro>[];
+    // for (Map map in list) {
+    //   Carro c = Carro.fromJson(map as Map<String, dynamic>);
+    //   carros.add(c);
+    // }
 
-    //List<Carro> carros = list.map<Carro>((map) => Carro.fromJson(map)).toList();
+    List<Carro> carros = list.map<Carro>((map) => Carro.fromJson(map as Map<String, dynamic>)).toList();
 
     return carros;
   }
