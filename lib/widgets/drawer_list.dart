@@ -4,7 +4,7 @@ import 'package:projeto_carros/pages/login/usuario.dart';
 import 'package:projeto_carros/utls/nav.dart';
 
 class DrawerList extends StatelessWidget {
-  Usuario user = Usuario();
+
 
   _header(Usuario user) {
     return UserAccountsDrawerHeader(
@@ -27,7 +27,7 @@ class DrawerList extends StatelessWidget {
             FutureBuilder<Usuario?>(
               future: future,
               builder: (context, snapshot) {
-                //Usuario user = snapshot.hasData;
+               Usuario? user = snapshot.data;
                 return user != null ? _header(user) : Container();
 
               },
