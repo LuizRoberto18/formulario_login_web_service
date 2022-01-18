@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:projeto_carros/pages/api/api_carros.dart';
 import 'package:projeto_carros/pages/carro/carro.dart';
 import 'package:projeto_carros/pages/carro/carro_page.dart';
+import 'package:projeto_carros/pages/carro/carros_bloc.dart';
 import 'package:projeto_carros/utls/nav.dart';
+import 'package:projeto_carros/widgets/text_error.dart';
 
 class CarrosListView extends StatefulWidget {
   final String tipo;
@@ -16,8 +19,8 @@ class CarrosListView extends StatefulWidget {
 
 class _CarrosListViewState extends State<CarrosListView>
     with AutomaticKeepAliveClientMixin<CarrosListView> {
-  List<Carro>? carros;
-  final _streamController = StreamController<List<Carro>>();
+ // List<Carro>? carros = [];
+  final _bloc = CarrosBloc();
   @override
   bool get wantKeepAlive => true;
 
@@ -25,7 +28,7 @@ class _CarrosListViewState extends State<CarrosListView>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadCarros();
+    _bloc.fetch(widget.tipo);
   }
 
   @override
@@ -35,60 +38,24 @@ class _CarrosListViewState extends State<CarrosListView>
     return _body();
   }
 
-  _loadCarros() async {
-    List<Carro> carros = await ApiCarros.getCarros(widget.tipo);
-    _streamController.add(carros);
-  }
-
   _body() {
     return StreamBuilder(
-      stream: _streamController.stream,
+      stream: _bloc.stream,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return Center(
-                child: Text(
-                  "Não foi possivel buscar os carros",
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 22,
-                  ),
-                ),
-              );
-            case ConnectionState.waiting:
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            case ConnectionState.active:
-            case ConnectionState.done:
-              return _listView(carros!);
-              break;
-          }
-        }
-        return Text("");
-        /* if (snapshot.hasError) {
-          return Center(
-            child: Text(
-              "Não foi possivel buscar os carros",
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 22,
-              ),
-            ),
-          );
+        if (snapshot.hasError) {
+        return TextError("Não foi possvel buscar os carros");
         }
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
-        return _listView(carros!);*/
+        return _listView(snapshot.data);
       },
     );
   }
 
-  _listView(List<Carro> carros) {
+  _listView(carros) {
     return Container(
       padding: EdgeInsets.all(16),
       child: ListView.builder(
@@ -152,6 +119,6 @@ class _CarrosListViewState extends State<CarrosListView>
   @override
   void dispose() {
     super.dispose();
-    _streamController.close();
+    _bloc.dispose();
   }
 }

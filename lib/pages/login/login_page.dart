@@ -5,6 +5,7 @@ import 'package:projeto_carros/pages/api/api_response.dart';
 import 'package:projeto_carros/pages/carro/home_page.dart';
 
 import 'package:projeto_carros/pages/login/login_api.dart';
+import 'package:projeto_carros/pages/login/login_bloc.dart';
 import 'package:projeto_carros/pages/login/usuario.dart';
 import 'package:projeto_carros/utls/alert.dart';
 import 'package:projeto_carros/utls/nav.dart';
@@ -25,18 +26,18 @@ class _LoginPageState extends State<LoginPage> {
 
   final _focussenha = FocusNode();
 
-  final _streamController = StreamController<bool>();
+  final _bloc = LoginBLoc();
 
   @override
   void initState() {
     super.initState();
-    Future<Usuario> future = Usuario.get();
-    future.then((Usuario user) {
-    if(user != null){
-      setState(() {
-        _ctrlLogin.text = user.login!;
-      });
-    }
+    Future<Usuario?> future = Usuario.get();
+    future.then((Usuario? user) {
+      if (user != null) {
+        setState(() {
+          _ctrlLogin.text = user.login!;
+        });
+      }
     });
   }
 
@@ -83,13 +84,13 @@ class _LoginPageState extends State<LoginPage> {
               height: 20,
             ),
             StreamBuilder<bool>(
-              stream: _streamController.stream,
-
-              builder: (context, snapshot) {
+              initialData: false,
+              stream: _bloc.stream,
+              builder: (context, AsyncSnapshot<bool>  snapshot) {
                 return AppButton(
                   "Login",
                   onPressed: () => _onClickLogin(),
-                  showProgress: snapshot.hasData != null ? snapshot.hasData : false ,
+                  showProgress: snapshot.data!,
                 );
               },
             ),
@@ -107,9 +108,7 @@ class _LoginPageState extends State<LoginPage> {
     String senha = _ctrlSenha.text;
     print("login: $login, senha: $senha");
 
-    _streamController.sink.add(true);
-
-    ApiResponse response = await LoginApi.login(login, senha);
+    ApiResponse response = await _bloc.login(login, senha);
 
     if (response.ok!) {
       Usuario user = response.result;
@@ -118,7 +117,6 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       alert(context, response.msg.toString());
     }
-    _streamController.add(false);
   }
 
   String? _validadeLogin(String? text) {
@@ -139,6 +137,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
-    _streamController.close();
+    _bloc.dispose();
   }
 }

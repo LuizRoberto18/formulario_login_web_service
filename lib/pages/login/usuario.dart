@@ -1,3 +1,4 @@
+import 'package:projeto_carros/utls/global.dart';
 import 'package:projeto_carros/utls/prefs.dart';
 import 'dart:convert' as convert;
 
@@ -51,11 +52,11 @@ class Usuario {
     Prefs.setString("user.prefs", json);
   }
 
-  static Future<Usuario> get() async {
+  static Future<Usuario?> get() async {
     String json = await Prefs.getString("user.prefs");
 
     Map map = convert.json.decode(json);
-    Usuario user = Usuario.fromJson(map as Map<String, dynamic>);
+     user = Usuario.fromJson(map as Map<String, dynamic>);
     return user;
   }
 

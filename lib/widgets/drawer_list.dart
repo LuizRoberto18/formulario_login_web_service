@@ -18,13 +18,13 @@ class DrawerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<Usuario> future = Usuario.get();
+    Future<Usuario?> future = Usuario.get();
 
     return SafeArea(
       child: Drawer(
         child: ListView(
           children: <Widget>[
-            FutureBuilder<Usuario>(
+            FutureBuilder<Usuario?>(
               future: future,
               builder: (context, snapshot) {
                 //Usuario user = snapshot.hasData;
