@@ -44,7 +44,30 @@ class _CarrosListViewState extends State<CarrosListView>
     return StreamBuilder(
       stream: _streamController.stream,
       builder: (context, snapshot) {
-        if (snapshot.hasError) {
+        if (snapshot.hasData) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return Center(
+                child: Text(
+                  "Não foi possivel buscar os carros",
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 22,
+                  ),
+                ),
+              );
+            case ConnectionState.waiting:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            case ConnectionState.active:
+            case ConnectionState.done:
+              return _listView(carros!);
+              break;
+          }
+        }
+        return Text("");
+        /* if (snapshot.hasError) {
           return Center(
             child: Text(
               "Não foi possivel buscar os carros",
@@ -60,8 +83,7 @@ class _CarrosListViewState extends State<CarrosListView>
             child: CircularProgressIndicator(),
           );
         }
-
-        return _listView(carros!);
+        return _listView(carros!);*/
       },
     );
   }
