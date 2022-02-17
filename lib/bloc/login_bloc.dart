@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:projeto_carros/pages/api/api_response.dart';
-import 'package:projeto_carros/pages/carro/simple_bloc.dart';
-import 'package:projeto_carros/pages/login/usuario.dart';
+import 'package:projeto_carros/api/api_response.dart';
+import 'package:projeto_carros/bloc/simple_bloc.dart';
+import 'package:projeto_carros/models/usuario.dart';
 
-import 'login_api.dart';
+import '../api/login_api.dart';
 
 class LoginBLoc extends SimpleBLoc<bool> {
   //StreamController _streamController = StreamController<bool>.broadcast();

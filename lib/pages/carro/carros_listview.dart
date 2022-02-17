@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:projeto_carros/pages/api/api_carros.dart';
-import 'package:projeto_carros/pages/carro/carro.dart';
+import 'package:projeto_carros/models/carro.dart';
 import 'package:projeto_carros/pages/carro/carro_page.dart';
-import 'package:projeto_carros/pages/carro/carros_bloc.dart';
+import 'package:projeto_carros/bloc/carros_bloc.dart';
 import 'package:projeto_carros/utls/nav.dart';
 import 'package:projeto_carros/widgets/text_error.dart';
 
@@ -19,7 +18,7 @@ class CarrosListView extends StatefulWidget {
 
 class _CarrosListViewState extends State<CarrosListView>
     with AutomaticKeepAliveClientMixin<CarrosListView> {
- // List<Carro>? carros = [];
+  // List<Carro>? carros = [];
   final _bloc = CarrosBloc();
   @override
   bool get wantKeepAlive => true;
@@ -43,7 +42,7 @@ class _CarrosListViewState extends State<CarrosListView>
       stream: _bloc.stream,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-        return TextError("Não foi possvel buscar os carros");
+          return TextError("Não foi possvel buscar os carros");
         }
         if (!snapshot.hasData) {
           return Center(

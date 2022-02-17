@@ -1,3 +1,3 @@
-import 'package:projeto_carros/pages/login/usuario.dart';
+import 'package:projeto_carros/models/usuario.dart';
 
 Usuario? user;

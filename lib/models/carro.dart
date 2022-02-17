@@ -10,13 +10,13 @@ class Carro {
 
   Carro(
       {this.id,
-        this.nome,
-        this.tipo,
-        this.descricao,
-        this.urlFoto,
-        this.urlVideo,
-        this.latitude,
-        this.longitude});
+      this.nome,
+      this.tipo,
+      this.descricao,
+      this.urlFoto,
+      this.urlVideo,
+      this.latitude,
+      this.longitude});
 
   Carro.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_carros/pages/login/login_page.dart';
-import 'package:projeto_carros/pages/login/usuario.dart';
+import 'package:projeto_carros/models/usuario.dart';
 import 'package:projeto_carros/utls/nav.dart';
 
 class DrawerList extends StatelessWidget {
-
-
   _header(Usuario user) {
     return UserAccountsDrawerHeader(
       accountName: Text("${user.nome}"),
@@ -27,9 +25,8 @@ class DrawerList extends StatelessWidget {
             FutureBuilder<Usuario?>(
               future: future,
               builder: (context, snapshot) {
-               Usuario? user = snapshot.data;
+                Usuario? user = snapshot.data;
                 return user != null ? _header(user) : Container();
-
               },
             ),
             _listTile(Icons.star, Icons.arrow_forward, "Favoritos",

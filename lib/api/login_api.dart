@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:projeto_carros/pages/api/api_response.dart';
-import 'package:projeto_carros/pages/login/usuario.dart';
+import 'package:projeto_carros/api/api_response.dart';
+import 'package:projeto_carros/models/usuario.dart';
 
 import 'package:projeto_carros/utls/prefs.dart';
 

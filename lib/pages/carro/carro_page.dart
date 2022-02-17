@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_carros/pages/carro/carro.dart';
+import 'package:projeto_carros/models/carro.dart';
 
 class CarroPage extends StatelessWidget {
   Carro carro;

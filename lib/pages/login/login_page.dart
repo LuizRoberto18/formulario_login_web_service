@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:projeto_carros/pages/api/api_response.dart';
+import 'package:projeto_carros/api/api_response.dart';
 import 'package:projeto_carros/pages/carro/home_page.dart';
 
-import 'package:projeto_carros/pages/login/login_api.dart';
-import 'package:projeto_carros/pages/login/login_bloc.dart';
-import 'package:projeto_carros/pages/login/usuario.dart';
+import 'package:projeto_carros/api/login_api.dart';
+import 'package:projeto_carros/bloc/login_bloc.dart';
+import 'package:projeto_carros/models/usuario.dart';
 import 'package:projeto_carros/utls/alert.dart';
 import 'package:projeto_carros/utls/nav.dart';
 import 'package:projeto_carros/widgets/app_button.dart';
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
             StreamBuilder<bool>(
               initialData: false,
               stream: _bloc.stream,
-              builder: (context, AsyncSnapshot<bool>  snapshot) {
+              builder: (context, AsyncSnapshot<bool> snapshot) {
                 return AppButton(
                   "Login",
                   onPressed: () => _onClickLogin(),
