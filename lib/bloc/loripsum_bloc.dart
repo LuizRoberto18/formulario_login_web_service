@@ -9,8 +9,9 @@ class LoripsumBloc {
   Stream<String> get stream => _streaamController.stream;
 
   fatch() async {
-    String s = lorin! ?? await LoripsumApi.getLoripsum();
-    lorin = s;
+    // String s = lorin! ?? await LoripsumApi.getLoripsum();
+    String s = await LoripsumApi.getLoripsum();
+    // lorin = s;
     _streaamController.add(s);
   }
 

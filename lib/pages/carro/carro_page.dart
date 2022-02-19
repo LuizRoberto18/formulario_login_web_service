@@ -4,7 +4,6 @@ import 'package:projeto_carros/bloc/loripsum_bloc.dart';
 import 'package:projeto_carros/models/carro.dart';
 import 'package:projeto_carros/widgets/text.dart';
 
-//criando menu popUp, adicionando descricao e icones para favorito e share, metodo global para Text,buscando api Loripsum e manipulando-a com streamBuilder e bloc
 class CarroPage extends StatefulWidget {
   Carro carro;
 
@@ -110,13 +109,13 @@ class _CarroPageState extends State<CarroPage> {
         ),
         StreamBuilder<String>(
           stream: _loripsumApiBloc.stream,
-          builder: (context, snapshot) {
+          builder: (context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
-            return text(snapshot.data!, fontSize: 16);
+            return text(snapshot.data, fontSize: 16);
           },
         ),
         text(""),
