@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_carros/pages/login/login_page.dart';
+import 'package:projeto_carros/pages/splash_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,8 +19,7 @@ class MyApp extends StatelessWidget {
         //tema de cor para todas as tela scaffold
         scaffoldBackgroundColor: Colors.white,
       ),
-
-      home: LoginPage(),
+      home: SplashPage(),
     );
   }
 }
