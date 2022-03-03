@@ -1,5 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_carros/api/loripsum_api.dart';
 import 'package:projeto_carros/bloc/loripsum_bloc.dart';
 import 'package:projeto_carros/models/carro.dart';
 import 'package:projeto_carros/widgets/text.dart';
@@ -18,7 +18,6 @@ class _CarroPageState extends State<CarroPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loripsumApiBloc.fatch();
   }
@@ -57,8 +56,8 @@ class _CarroPageState extends State<CarroPage> {
     return Container(
       padding: EdgeInsets.all(16),
       child: ListView(
-        children: [
-          Image.network("${widget.carro.urlFoto}"),
+        children: <Widget>[
+          CachedNetworkImage(imageUrl: "${widget.carro.urlFoto}"),
           _bloco1(),
           Divider(),
           _bloco2(),

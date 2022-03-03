@@ -1,12 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_carros/models/carro.dart';
 import 'package:projeto_carros/pages/carro/carro_page.dart';
-import 'package:projeto_carros/bloc/carros_bloc.dart';
 import 'package:projeto_carros/utls/nav.dart';
-import 'package:projeto_carros/widgets/text_error.dart';
 
 class CarrosListView extends StatelessWidget {
   List<Carro> carros;
@@ -28,10 +24,8 @@ class CarrosListView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                      child: Image.network(
-                    "${c.urlFoto}",
-                    width: 250,
-                  )),
+                      child: CachedNetworkImage(
+                          imageUrl: "${c.urlFoto}", width: 250)),
                   ListTile(
                     title: Text(
                       "${c.nome}",

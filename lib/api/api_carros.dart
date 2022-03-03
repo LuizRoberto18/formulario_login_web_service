@@ -3,8 +3,6 @@ import 'dart:convert' as convert;
 import 'package:projeto_carros/data/carro_dao.dart';
 import 'package:projeto_carros/models/carro.dart';
 import 'package:http/http.dart' as http;
-import 'package:projeto_carros/models/usuario.dart';
-import 'package:projeto_carros/utls/global.dart';
 
 class TipoCarro {
   static final String classicos = "classicos";
@@ -40,9 +38,7 @@ class ApiCarros {
     List<Carro> carros = list
         .map<Carro>((map) => Carro.fromJson(map as Map<String, dynamic>))
         .toList();
-    //salvando todos os carros no banco de dados
-    final dao = CarroDAO();
-    carros.forEach(dao.save);
+
     return carros;
   }
 }
