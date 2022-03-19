@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_carros/bloc/loripsum_bloc.dart';
 import 'package:projeto_carros/models/carro.dart';
+import 'package:projeto_carros/models/favorito_service.dart';
 import 'package:projeto_carros/widgets/text.dart';
 
 class CarroPage extends StatefulWidget {
@@ -16,9 +17,19 @@ class CarroPage extends StatefulWidget {
 class _CarroPageState extends State<CarroPage> {
   final _loripsumApiBloc = LoripsumBloc();
 
+  Carro get carro => widget.carro;
+
+  Color color = Colors.grey;
+
   @override
   void initState() {
     super.initState();
+
+    FavoritoService.isFavorito(carro).then((bool favorito) {
+      setState(() {
+        color = favorito ? Colors.red : Colors.grey;
+      });
+    });
     _loripsumApiBloc.fatch();
   }
 
@@ -83,7 +94,7 @@ class _CarroPageState extends State<CarroPage> {
                 onPressed: _onClickFavorito,
                 icon: Icon(
                   Icons.favorite,
-                  color: Colors.red,
+                  color: color,
                   size: 40,
                 )),
             IconButton(
@@ -140,13 +151,18 @@ class _CarroPageState extends State<CarroPage> {
     }
   }
 
-  void _onClickFavorito() {}
+  void _onClickFavorito() async {
+    bool favorito = await FavoritoService.favoritar(carro);
+
+    setState(() {
+      color = favorito ? Colors.red : Colors.grey;
+    });
+  }
 
   void _onClickShare() {}
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _loripsumApiBloc.dispose();
   }

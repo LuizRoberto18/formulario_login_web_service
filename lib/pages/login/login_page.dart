@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:projeto_carros/api/api_response.dart';
-import 'package:projeto_carros/pages/carro/home_page.dart';
+import 'package:projeto_carros/pages/home_page.dart';
 
-import 'package:projeto_carros/api/login_api.dart';
 import 'package:projeto_carros/bloc/login_bloc.dart';
 import 'package:projeto_carros/models/usuario.dart';
 import 'package:projeto_carros/utls/alert.dart';

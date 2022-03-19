@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_carros/data/db_helper.dart';
 import 'package:projeto_carros/models/usuario.dart';
-import 'package:projeto_carros/pages/carro/home_page.dart';
+import 'package:projeto_carros/pages/home_page.dart';
 import 'package:projeto_carros/pages/login/login_page.dart';
 import 'package:projeto_carros/utls/nav.dart';
+import 'package:projeto_carros/utls/sql/db_helper.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
