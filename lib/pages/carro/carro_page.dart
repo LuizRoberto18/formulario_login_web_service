@@ -1,8 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_carros/api/api_carros.dart';
+import 'package:projeto_carros/api/api_response.dart';
 import 'package:projeto_carros/bloc/loripsum_bloc.dart';
 import 'package:projeto_carros/models/carro.dart';
 import 'package:projeto_carros/models/favorito_service.dart';
+import 'package:projeto_carros/pages/carro/carro_form_page.dart';
+import 'package:projeto_carros/utls/alert.dart';
+import 'package:projeto_carros/utls/nav.dart';
 import 'package:projeto_carros/widgets/text.dart';
 
 class CarroPage extends StatefulWidget {
@@ -68,6 +73,7 @@ class _CarroPageState extends State<CarroPage> {
       padding: EdgeInsets.all(16),
       child: ListView(
         children: <Widget>[
+          // se der erro na foto coloca a url padrao da imagem
           CachedNetworkImage(imageUrl: "${widget.carro.urlFoto}"),
           _bloco1(),
           Divider(),
@@ -140,10 +146,14 @@ class _CarroPageState extends State<CarroPage> {
   _onClickPopUpMenu(String value) {
     switch (value) {
       case "Editar":
-        print("Editar!!!");
+        push(
+            context,
+            CarroFormPage(
+              carro: carro,
+            ));
         break;
       case "Deletar":
-        print("Deletar!!!");
+        deletar;
         break;
       case "Share":
         print("Share!!!");
@@ -160,6 +170,18 @@ class _CarroPageState extends State<CarroPage> {
   }
 
   void _onClickShare() {}
+
+  void deletar(Carro c) async {
+    ApiResponse<bool> response = await ApiCarros.delete(carro);
+
+    if (response.ok!) {
+      alert(context, "Carro deletado com sucesso", callBack: () {
+        pop(context);
+      });
+    } else {
+      alert(context, response.msg!);
+    }
+  }
 
   @override
   void dispose() {

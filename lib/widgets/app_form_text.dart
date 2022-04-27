@@ -6,7 +6,7 @@ class FormText extends StatelessWidget {
   bool password;
   TextEditingController? controller;
   FormFieldValidator<String>? validator;
-  TextInputType? KeyboardType;
+  TextInputType? keyboardType;
   TextInputAction? textInputAction;
   FocusNode? focusNode;
   FocusNode? nextFocus;
@@ -17,7 +17,7 @@ class FormText extends StatelessWidget {
     this.password = false,
     this.controller,
     this.validator,
-    this.KeyboardType,
+    this.keyboardType,
     this.textInputAction,
     this.focusNode,
     this.nextFocus,
@@ -29,7 +29,7 @@ class FormText extends StatelessWidget {
       controller: controller!,
       obscureText: password,
       validator: validator,
-      keyboardType: KeyboardType,
+      keyboardType: keyboardType,
       keyboardAppearance: Brightness.dark,
       textInputAction: textInputAction,
       focusNode: focusNode,

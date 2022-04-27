@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
               "Digite o login",
               controller: _ctrlLogin,
               validator: _validadeLogin,
-              KeyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               nextFocus: _focussenha,
             ),
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
               controller: _ctrlSenha,
               password: true,
               validator: _validadesSenha,
-              KeyboardType: TextInputType.number,
+              keyboardType: TextInputType.number,
               focusNode: _focussenha,
             ),
             SizedBox(

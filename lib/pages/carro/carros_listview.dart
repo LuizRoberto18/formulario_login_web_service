@@ -25,7 +25,9 @@ class CarrosListView extends StatelessWidget {
                 children: <Widget>[
                   Center(
                       child: CachedNetworkImage(
-                          imageUrl: "${c.urlFoto}", width: 250)),
+                          //se der erro na foto coloca a url padrao
+                          imageUrl: "${c.urlFoto!}",
+                          width: 250)),
                   ListTile(
                     title: Text(
                       "${c.nome}",
